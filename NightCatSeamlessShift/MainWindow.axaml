@@ -1,0 +1,329 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:NightCatSeamlessShift.ViewModels"
+        x:Class="NightCatSeamlessShift.MainWindow"
+        x:DataType="vm:MainViewModel"
+        Title="Night Cat Scene Mixer"
+        Width="1440" Height="720" MinWidth="1440" MinHeight="720"
+        Background="#020617"
+        WindowStartupLocation="CenterScreen"
+        ExtendClientAreaToDecorationsHint="True"
+        ExtendClientAreaChromeHints="PreferSystemChrome">
+
+    <Window.Styles>
+        <Style Selector="Button">
+            <Setter Property="Background" Value="#0f172a" />
+            <Setter Property="Foreground" Value="#e2e8f0" />
+            <Setter Property="BorderBrush" Value="#1e293b" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="16,10" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Transitions">
+                <Transitions>
+                    <BrushTransition Property="Background" Duration="0:0:0.2" />
+                    <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.1" />
+                </Transitions>
+            </Setter>
+        </Style>
+        <Style Selector="Button:pointerover">
+            <Setter Property="Background" Value="#1e293b" />
+            <Setter Property="BorderBrush" Value="#00f0ff" />
+            <Setter Property="RenderTransform" Value="scale(1.02)" />
+        </Style>
+        <Style Selector="Button:pressed">
+            <Setter Property="Background" Value="#334155" />
+            <Setter Property="RenderTransform" Value="scale(0.98)" />
+        </Style>
+        <Style Selector="Button.focus">
+            <Setter Property="Background" Value="#00f0ff" />
+            <Setter Property="Foreground" Value="#05070a" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="BorderBrush" Value="#00f0ff" />
+        </Style>
+        <Style Selector="Button.focus:pointerover">
+            <Setter Property="Background" Value="#80f8ff" />
+        </Style>
+        <Style Selector="Button.danger">
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Background" Value="#2d0a20" />
+            <Setter Property="Foreground" Value="#ff00aa" />
+        </Style>
+        <Style Selector="Button.danger:pointerover">
+            <Setter Property="Background" Value="#4a0d33" />
+            <Setter Property="BorderBrush" Value="#ff33bb" />
+            <Setter Property="Foreground" Value="#ff33bb" />
+        </Style>
+        <Style Selector="TextBlock">
+            <Setter Property="Foreground" Value="#e2e8f0" />
+        </Style>
+        <Style Selector="TextBlock.label">
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="Foreground" Value="#64748b" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="LetterSpacing" Value="1.5" />
+        </Style>
+        <Style Selector="TextBox">
+            <Setter Property="Background" Value="#0f172a" />
+            <Setter Property="Foreground" Value="#e2e8f0" />
+            <Setter Property="BorderBrush" Value="#1e293b" />
+            <Setter Property="Padding" Value="10,8" />
+            <Setter Property="CornerRadius" Value="6" />
+            <Setter Property="CaretBrush" Value="#00f0ff" />
+        </Style>
+        <Style Selector="TextBox:focus">
+            <Setter Property="BorderBrush" Value="#00f0ff" />
+        </Style>
+        <Style Selector="Slider">
+            <Setter Property="Foreground" Value="#00f0ff" />
+        </Style>
+        <Style Selector="ScrollViewer">
+            <Setter Property="AllowAutoHide" Value="False" />
+        </Style>
+
+        <Style Selector="TextBlock.digital">
+            <Setter Property="FontFamily" Value="Consolas, Monospace" />
+            <Setter Property="Foreground" Value="#00f0ff" />
+            <Setter Property="Background" Value="#05070a" />
+            <Setter Property="Padding" Value="4,2" />
+        </Style>
+    </Window.Styles>
+
+    <Grid RowDefinitions="Auto,*">
+
+        <Border Grid.Row="0" Background="#0f172a" BorderBrush="#1e293b" BorderThickness="0,0,0,1" Padding="24,16"
+                BoxShadow="0 4 20 0 #10000000">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="18" VerticalAlignment="Center">
+                    <Border Width="48" Height="48" CornerRadius="10" ClipToBounds="True"
+                            BorderBrush="#00f0ff" BorderThickness="1"
+                            BoxShadow="0 0 15 0 #3000f0ff">
+                        <Image Source="/Assets/cardHead.png" Stretch="UniformToFill" />
+                    </Border>
+                    <StackPanel VerticalAlignment="Center" Spacing="2">
+                        <TextBlock Text="NIGHT CAT CODING" FontSize="20" FontWeight="Black"
+                                   Foreground="#f1f5f9" LetterSpacing="1" FontStyle="Italic" />
+                        <TextBlock Text="SCENE MIXER // PRO" FontSize="10" Foreground="#00f0ff"
+                                   FontWeight="Bold" Opacity="0.9" LetterSpacing="3" />
+                    </StackPanel>
+                </StackPanel>
+
+                <WrapPanel Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button Command="{Binding PlayAllCommand}" Margin="4" Classes="focus">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="▶" FontSize="12" />
+                            <TextBlock Text="PLAY ALL" />
+                        </StackPanel>
+                    </Button>
+                    <Button Content="⏸ PAUSE" Command="{Binding PauseAllCommand}" Margin="4" />
+                    <Button Content="⏹ STOP" Command="{Binding StopAllCommand}" Margin="4" />
+
+                    <Border Width="1" Height="30" Background="#334155" Margin="15,0" VerticalAlignment="Center" />
+
+                    <Button Command="{Binding FadeInAllCommand}" Margin="4">
+                        <StackPanel Orientation="Horizontal" Spacing="5">
+                            <TextBlock Text="↗" Foreground="#00f0ff" />
+                            <TextBlock Text="FADE IN" />
+                        </StackPanel>
+                    </Button>
+                    <Button Command="{Binding FadeOutAllCommand}" Margin="4">
+                        <StackPanel Orientation="Horizontal" Spacing="5">
+                            <TextBlock Text="↘" Foreground="#00f0ff" />
+                            <TextBlock Text="FADE OUT" />
+                        </StackPanel>
+                    </Button>
+                </WrapPanel>
+
+                <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="20" VerticalAlignment="Center"
+                            Margin="0,0,140,0">
+                    <StackPanel Spacing="4" VerticalAlignment="Center">
+                        <Grid>
+                            <TextBlock Classes="label" Text="MASTER VOL" />
+                            <TextBlock Text="{Binding MasterVolume, StringFormat={}{0:P0}}"
+                                       Foreground="#00f0ff" FontWeight="Bold" HorizontalAlignment="Right" FontSize="11" />
+                        </Grid>
+                        <Slider Width="120" Minimum="0" Maximum="1" Value="{Binding MasterVolume}" />
+                    </StackPanel>
+
+                    <Border Width="1" Height="30" Background="#334155" />
+
+                    <StackPanel Spacing="4" VerticalAlignment="Center">
+                        <TextBlock Text="FADE (s)" Classes="label" HorizontalAlignment="Center" />
+                        <TextBox Width="60" Text="{Binding FadeDuration}" TextAlignment="Center" FontSize="12" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <Grid Grid.Row="1" ColumnDefinitions="*, 350">
+            <Grid Grid.Column="0">
+                <ScrollViewer Padding="30" IsVisible="{Binding Tracks.Count}">
+                    <ItemsControl ItemsSource="{Binding Tracks}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Spacing="12" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="#0f172a" BorderBrush="#1e293b" BorderThickness="1"
+                                        CornerRadius="12" Padding="20" BoxShadow="0 4 6 0 #05000000">
+                                    <Grid RowDefinitions="Auto,Auto,Auto">
+                                        <Grid Grid.Row="0" ColumnDefinitions="*,Auto" Margin="0,0,0,15">
+                                            <StackPanel Grid.Column="0" Orientation="Horizontal" Spacing="15"
+                                                        VerticalAlignment="Center">
+                                                <Border Width="4" CornerRadius="2" Background="#00f0ff" Height="28"
+                                                        BoxShadow="0 0 10 0 #8000f0ff" />
+                                                <StackPanel VerticalAlignment="Center">
+                                                    <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="Bold"
+                                                               Foreground="#f8fafc" TextTrimming="CharacterEllipsis" />
+                                                    <TextBlock Text="{Binding TimeDisplay}" FontSize="12"
+                                                               Foreground="#64748b" Margin="0,2,0,0" />
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <WrapPanel Grid.Column="1" HorizontalAlignment="Right">
+                                                <Button Content="⚡ FOCUS" Command="{Binding FocusCommand}"
+                                                        Classes="focus" Margin="4" FontSize="10" Padding="10,5" />
+                                                <Button Content="{Binding PlayPauseText}"
+                                                        Command="{Binding PlayPauseCommand}"
+                                                        Width="50" Margin="4" Padding="10,5" />
+                                                <Button Content="⏹" Command="{Binding StopCommand}"
+                                                        Width="40" Margin="4" Padding="10,5" />
+                                                <Button Content="✕" Command="{Binding RemoveCommand}"
+                                                        Classes="danger" Width="30" Margin="4" Padding="5" />
+                                            </WrapPanel>
+                                        </Grid>
+
+                                        <Grid Grid.Row="1" ColumnDefinitions="200,*,240">
+
+                                            <StackPanel Grid.Column="0" Spacing="6" Margin="0,0,20,0">
+                                                <TextBlock Text="VOLUME" Classes="label" />
+                                                <Slider Minimum="0" Maximum="1" Value="{Binding Volume}" />
+                                            </StackPanel>
+
+                                            <StackPanel Grid.Column="1" Spacing="6" Margin="0,0,20,0">
+                                                <TextBlock Text="NOTES" Classes="label" />
+                                                <TextBox Text="{Binding Notes}" Watermark="Add cue notes..."
+                                                         Background="#05070a"
+                                                         BorderThickness="0" Padding="8,5" FontSize="12" />
+                                            </StackPanel>
+
+                                            <StackPanel Grid.Column="2" Spacing="6">
+                                                <StackPanel Orientation="Horizontal" Spacing="10"
+                                                            VerticalAlignment="Center">
+                                                    <TextBlock Text="LOOP REGION" Classes="label"
+                                                               VerticalAlignment="Center" />
+                                                    <CheckBox IsChecked="{Binding LoopActive}"
+                                                              Content="ACTIVE" FontSize="10"
+                                                              Margin="0,-1,0,0"
+                                                              Foreground="#00f0ff" />
+                                                </StackPanel>
+
+                                                <Grid ColumnDefinitions="*, Auto, *">
+                                                    <Button Grid.Column="0" Command="{Binding SetLoopStartCommand}"
+                                                            Padding="8,4" FontSize="10" HorizontalAlignment="Stretch"
+                                                            HorizontalContentAlignment="Center"
+                                                            ToolTip.Tip="Set Current Position as Start">
+                                                        <StackPanel Orientation="Horizontal" Spacing="4">
+                                                            <TextBlock Text="[" FontWeight="Bold" Foreground="#00f0ff" />
+                                                            <TextBlock Text="SET IN" />
+                                                        </StackPanel>
+                                                    </Button>
+
+                                                    <Border Grid.Column="1" Margin="4,0" Background="#05070a"
+                                                            CornerRadius="4" Padding="6,0">
+                                                        <TextBlock Text="{Binding LoopStart, StringFormat={}{0:F0}}"
+                                                                   VerticalAlignment="Center" Classes="digital"
+                                                                   FontSize="10" Opacity="0.7" />
+                                                    </Border>
+
+                                                    <Button Grid.Column="2" Command="{Binding SetLoopEndCommand}"
+                                                            Padding="8,4" FontSize="10" HorizontalAlignment="Stretch"
+                                                            HorizontalContentAlignment="Center"
+                                                            ToolTip.Tip="Set Current Position as End">
+                                                        <StackPanel Orientation="Horizontal" Spacing="4">
+                                                            <TextBlock Text="SET OUT" />
+                                                            <TextBlock Text="]" FontWeight="Bold" Foreground="#00f0ff" />
+                                                        </StackPanel>
+                                                    </Button>
+                                                </Grid>
+                                            </StackPanel>
+                                        </Grid>
+
+                                        <Slider Grid.Row="2" Margin="0,10,0,0" Minimum="0" Maximum="100"
+                                                Value="{Binding Progress}" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+
+                <Grid IsVisible="{Binding !Tracks.Count}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel Spacing="15" HorizontalAlignment="Center">
+                        <TextBlock Text="TRACK LIST EMPTY" Classes="label" FontSize="14" HorizontalAlignment="Center"
+                                   Opacity="0.5" />
+                        <TextBlock Text="Load tracks to start mixing" Foreground="#334155" HorizontalAlignment="Center" />
+                        <Button Command="{Binding AddTrackCommand}"
+                                Classes="focus" HorizontalAlignment="Center" Padding="30,12" Margin="0,20,0,0">
+                            <StackPanel Orientation="Horizontal" Spacing="10">
+                                <TextBlock Text="+" FontWeight="Bold" />
+                                <TextBlock Text="ADD FIRST TRACK" FontWeight="Bold" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Grid>
+
+            <Border Grid.Column="1" Background="#080c16" BorderBrush="#1e293b" BorderThickness="1,0,0,0"
+                    BoxShadow="-5 0 20 0 #10000000">
+                <Grid RowDefinitions="*,Auto">
+                    <StackPanel Grid.Row="0" Spacing="25" VerticalAlignment="Center" Margin="30">
+                        <Border CornerRadius="20" ClipToBounds="True" Background="#020617"
+                                BoxShadow="0 15 40 0 #2500f0ff" BorderBrush="#334155" BorderThickness="1">
+                            <Image Source="/Assets/NightCat_Music.png" Stretch="Uniform" />
+                        </Border>
+                        <StackPanel Spacing="8">
+                            <Border Background="#1e293b" HorizontalAlignment="Center" CornerRadius="20" Padding="12,4"
+                                    Margin="0,0,0,10">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <Border Width="8" Height="8" CornerRadius="4" Background="#00f0ff"
+                                            BoxShadow="0 0 10 0 #00f0ff" />
+                                    <TextBlock Text="VIBE SESSION ACTIVE" FontSize="10" FontWeight="Bold"
+                                               Foreground="#00f0ff" LetterSpacing="1" />
+                                </StackPanel>
+                            </Border>
+                            <TextBlock Text="Immersive Flow" FontSize="22" FontWeight="Bold"
+                                       Foreground="#e2e8f0" HorizontalAlignment="Center" TextAlignment="Center" />
+                            <TextBlock Text="Add tracks, set loops, and drift away."
+                                       FontSize="13" Foreground="#64748b" HorizontalAlignment="Center"
+                                       TextAlignment="Center" TextWrapping="Wrap" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <Border Grid.Row="1" Padding="30" Background="#0b1120" BorderBrush="#1e293b"
+                            BorderThickness="0,1,0,0">
+                        <StackPanel Spacing="15">
+                            <Button Command="{Binding AddTrackCommand}" HorizontalAlignment="Stretch"
+                                    Background="#1e293b" BorderBrush="#334155">
+                                <StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Center">
+                                    <TextBlock Text="+" Foreground="#00f0ff" FontWeight="Bold" />
+                                    <TextBlock Text="Import Audio File" />
+                                </StackPanel>
+                            </Button>
+                            <TextBlock Text="Night Cat Audio Engine v1.0"
+                                       FontSize="10" Foreground="#334155" HorizontalAlignment="Center" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>
